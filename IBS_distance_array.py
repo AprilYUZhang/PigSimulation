@@ -12,7 +12,7 @@ def parse_plink_genome_file(genome_file):
             individual1 = fields[4:18]
             individual2 = fields[22:36]
             ibs_distance = float(fields[81:91])  # Assuming IBS distance is in column 10 (0-indexed)
-            ibs_distances.append((individual1, individual2, ibs_distance))
+            ibs_distances.append((individual1.strip(" "), individual2.strip(" "), ibs_distance))
 
     return ibs_distances
 

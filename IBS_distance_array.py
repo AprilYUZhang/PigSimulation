@@ -18,17 +18,20 @@ def parse_plink_genome_file(genome_file):
 
 # Step 2: Compute IBS distance array
 def compute_ibs_distance_array(ibs_distances):
+    indi_dict={}
     individuals = sorted(set([x[0] for x in ibs_distances]))
+    for i in enumerate(individuals):
+        indi_dict[individuals[i]]=i
     num_individuals = len(individuals)
     ibs_distance_array = np.zeros((num_individuals, num_individuals))
 
     # Populate the distance array
-    for i, ind1 in enumerate(individuals):
-        for j, ind2 in enumerate(individuals):
-            if i != j:
-                # Find the IBS distance between the pair (ind1, ind2)
-                pair_distance = next(d[2] for d in ibs_distances if (d[0] == ind1 and d[1] == ind2) or (d[0] == ind2 and d[1] == ind1))
-                ibs_distance_array[i, j] = pair_distance
+    for j in ibs_distances:
+        index1=indi_dict[j[0]]
+        index2=indi_dict[j[1]]
+        # Find the IBS distance between the pair (ind1, ind2)
+        ibs_distance_array[index1,index2] = j[2]
+        ibs_distance_array[index2,index1] = j[2]
     return ibs_distance_array, individuals
 
 # Access command-line arguments
@@ -38,7 +41,6 @@ parser.add_argument('--geDist', type=str, help='genome dist file from PLINK')
 parser.add_argument('--output', type=str, help='output directory and prefix')
 # Parse arguments
 args = parser.parse_args()
-print(args.geDist)
 ibs_distances=parse_plink_genome_file(args.geDist)
 ibs_distance_array, individuals = compute_ibs_distance_array(ibs_distances)
 np.save(args.output+".npy",np.array([ibs_distance_array, individuals]))

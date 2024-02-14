@@ -34,11 +34,11 @@ def compute_ibs_distance_array(ibs_distances):
 # Access command-line arguments
 parser = argparse.ArgumentParser(description='generate the IBS distance array')
 # Add arguments
-parser.add_argument('geDist', type=str, help='genome dist file from PLINK')
-parser.add_argument('output', type=str, help='output directory and prefix')
+parser.add_argument('--geDist', type=str, help='genome dist file from PLINK')
+parser.add_argument('--output', type=str, help='output directory and prefix')
 # Parse arguments
 args = parser.parse_args()
-
+print(args.geDist)
 ibs_distances=parse_plink_genome_file(args.geDist)
 ibs_distance_array, individuals = compute_ibs_distance_array(ibs_distances)
 np.save(args.output+".npy",np.array([ibs_distance_array, individuals]))

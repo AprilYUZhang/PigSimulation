@@ -20,8 +20,8 @@ def parse_plink_genome_file(genome_file):
 def compute_ibs_distance_array(ibs_distances):
     indi_dict={}
     individuals = sorted(set([x[0] for x in ibs_distances]))
-    for i in enumerate(individuals):
-        indi_dict[individuals[i]]=i
+    for i,j in enumerate(individuals):
+        indi_dict[j]=i
     num_individuals = len(individuals)
     ibs_distance_array = np.zeros((num_individuals, num_individuals))
 

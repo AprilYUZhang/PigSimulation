@@ -35,8 +35,8 @@ def compute_ibs_distance_array(ibs_distances):
         index1=indi_dict[j[0]]
         index2=indi_dict[j[1]]
         # Find the IBS distance between the pair (ind1, ind2)
-        ibs_distance_array[index1,index2] = j[2]
-        ibs_distance_array[index2,index1] = j[2]
+        ibs_distance_array[index1,index2] = 1-j[2]
+        ibs_distance_array[index2,index1] = 1-j[2]
     return ibs_distance_array, individuals
 
 # Access command-line arguments

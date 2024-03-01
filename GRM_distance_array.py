@@ -3,16 +3,17 @@ import argparse
 
 # Step 1: Parse PLINK genome results file
 def parse_grm_file(genome_file):
+    grm_vector = {}
     grm_distances = []
-
     with open(genome_file, 'r') as f:
         for line in f:
             fields = line.strip("\n").split("\t")
             individual1 = fields[0]
             individual2 = fields[1]
             grm_distance = fields[3]  # Assuming IBS distance is in column 10 (0-indexed)
+            grm_vector[individual1] = fields[2]
             grm_distances.append((individual1.strip(" "), individual2.strip(" "), grm_distance))
-    return grm_distances
+    return grm_distances,grm_vector
 
 # Step 2: Compute GRM distance array
 def compute_grm_distance_array(grm_distances):
@@ -40,6 +41,7 @@ parser.add_argument('--geDist', type=str, help='genome dist file from PLINK')
 parser.add_argument('--output', type=str, help='output directory and prefix')
 # Parse arguments
 args = parser.parse_args()
-distances=parse_grm_file(args.geDist)
-ibs_distance_array= compute_grm_distance_array(distances)
-np.save(args.output+".npy",ibs_distance_array)
+distances,vector=parse_grm_file(args.geDist)
+distance_array= compute_grm_distance_array(distances)
+np.save(args.output+".npy",distance_array)
+np.save(args.output+"_vector.npy",vector)

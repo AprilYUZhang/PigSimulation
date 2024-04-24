@@ -1,4 +1,9 @@
 Correct_Arrays.py 
+
+packge: 
+numpy                     1.24.3 
+pandas                    2.0.3 
+
 usage: Correct_arrays [-h] [-w SETWS] [-s SNPCHIMP] [-f BFILE] [-v VERSION]
                       [--flag_99 FLAG_99] [--inputF INPUTF]
                       [--outputF OUTPUTF] [--funtion FUNTION] [-v1 VERSION1]
